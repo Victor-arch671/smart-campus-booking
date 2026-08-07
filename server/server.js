@@ -10,6 +10,9 @@ app.use(express.json());
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
+const facilityRoutes = require('./routes/facilityRoutes');
+app.use('/api/facilities', facilityRoutes);
+
 app.get('/', (req, res) => res.send('Smart Campus Booking API is running'));
 
 mongoose.connect(process.env.MONGO_URI)
