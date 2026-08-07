@@ -22,6 +22,9 @@ app.use('/api/admin', adminRoutes);
 const maintenanceRoutes = require('./routes/maintenanceRoutes');
 app.use('/api/maintenance', maintenanceRoutes);
 
+const riskRoutes = require('./routes/riskRoutes');
+app.use('/api/risk-alerts', riskRoutes);
+
 app.get('/', (req, res) => res.send('Smart Campus Booking API is running'));
 
 mongoose.connect(process.env.MONGO_URI)

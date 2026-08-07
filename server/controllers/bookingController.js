@@ -1,6 +1,7 @@
 const Booking = require('../models/Booking');
 const Facility = require('../models/Facility');
 const MaintenanceSchedule = require('../models/MaintenanceSchedule');
+const RiskAlert = require('../models/RiskAlert');
 
 // helper: get facility IDs this manager owns (admins see everything — returns null)
 async function getManagedFacilityIds(user) {
@@ -9,7 +10,7 @@ async function getManagedFacilityIds(user) {
   return facilities.map(f => f._id);
 }
 
-// CREATE booking — with conflict detection (double-booking + maintenance)
+// CREATE booking — with conflict detection (double-booking + maintenance) + risk detection
 exports.createBooking = async (req, res) => {
   try {
     const { facilityId, bookingDate, startTime, endTime, expectedAttendance, purpose, urgency, peopleAffected } = req.body;
@@ -78,6 +79,24 @@ exports.createBooking = async (req, res) => {
     });
 
     await booking.save();
+
+    // Risk Detection: flag if this user made 3+ booking attempts for the same facility/date within the last hour
+    const recentAttempts = await Booking.countDocuments({
+      userId: req.user.id,
+      facilityId,
+      bookingDate,
+      createdAt: { $gte: new Date(Date.now() - 60 * 60 * 1000) }
+    });
+
+    if (recentAttempts >= 3) {
+      await RiskAlert.create({
+        type: 'multiple_booking_attempts',
+        relatedUserId: req.user.id,
+        relatedBookingId: booking._id,
+        description: `User made ${recentAttempts} booking attempts for the same facility/date within an hour.`
+      });
+    }
+
     res.status(201).json(booking);
   } catch (err) {
     console.error(err);
