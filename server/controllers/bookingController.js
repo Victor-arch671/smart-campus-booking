@@ -2,6 +2,8 @@ const Booking = require('../models/Booking');
 const Facility = require('../models/Facility');
 const MaintenanceSchedule = require('../models/MaintenanceSchedule');
 const RiskAlert = require('../models/RiskAlert');
+const User = require('../models/User');
+const { notify } = require('../services/notificationEngine');
 
 // helper: get facility IDs this manager owns (admins see everything — returns null)
 async function getManagedFacilityIds(user) {
@@ -10,7 +12,7 @@ async function getManagedFacilityIds(user) {
   return facilities.map(f => f._id);
 }
 
-// CREATE booking — with conflict detection (double-booking + maintenance) + risk detection
+// CREATE booking — with conflict detection + risk detection + notify the relevant manager
 exports.createBooking = async (req, res) => {
   try {
     const { facilityId, bookingDate, startTime, endTime, expectedAttendance, purpose, urgency, peopleAffected } = req.body;
@@ -97,6 +99,16 @@ exports.createBooking = async (req, res) => {
       });
     }
 
+    // Notification Engine: notify the facility's manager (if assigned) that a booking is pending their approval
+    if (facility.managerId) {
+      await notify(
+        facility.managerId,
+        'pending_approval',
+        `A new booking for ${facility.name} on ${bookingDate} is awaiting your approval.`,
+        booking._id
+      );
+    }
+
     res.status(201).json(booking);
   } catch (err) {
     console.error(err);
@@ -115,16 +127,26 @@ exports.getMyBookings = async (req, res) => {
   }
 };
 
-// CANCEL booking (owner only)
+// CANCEL booking (owner only) — notify the manager it's been cancelled
 exports.cancelBooking = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.params.id);
+    const booking = await Booking.findById(req.params.id).populate('facilityId');
     if (!booking) return res.status(404).json({ message: 'Booking not found.' });
     if (booking.userId.toString() !== req.user.id) {
       return res.status(403).json({ message: 'You can only cancel your own bookings.' });
     }
     booking.status = 'cancelled';
     await booking.save();
+
+    if (booking.facilityId?.managerId) {
+      await notify(
+        booking.facilityId.managerId,
+        'booking_cancelled',
+        `A booking for ${booking.facilityId.name} on ${booking.bookingDate.toISOString().split('T')[0]} was cancelled by the requester.`,
+        booking._id
+      );
+    }
+
     res.status(200).json({ message: 'Booking cancelled.', booking });
   } catch (err) {
     console.error(err);
@@ -150,7 +172,7 @@ exports.getPendingBookings = async (req, res) => {
   }
 };
 
-// APPROVE / REJECT booking — only if the manager owns that facility
+// APPROVE / REJECT booking — only if the manager owns that facility — notify the requester
 exports.updateBookingStatus = async (req, res) => {
   try {
     const { status } = req.body;
@@ -170,6 +192,13 @@ exports.updateBookingStatus = async (req, res) => {
     booking.approvedBy = req.user.id;
     booking.approvalTimestamp = new Date();
     await booking.save();
+
+    const notifType = status === 'approved' ? 'booking_confirmed' : 'booking_rejected';
+    const notifMessage = status === 'approved'
+      ? `Your booking for ${booking.facilityId.name} on ${booking.bookingDate.toISOString().split('T')[0]} has been approved.`
+      : `Your booking for ${booking.facilityId.name} on ${booking.bookingDate.toISOString().split('T')[0]} was rejected.`;
+
+    await notify(booking.userId, notifType, notifMessage, booking._id);
 
     res.status(200).json({ message: `Booking ${status}.`, booking });
   } catch (err) {
