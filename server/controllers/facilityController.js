@@ -95,33 +95,38 @@ exports.recommendFacility = async (req, res) => {
       return res.status(404).json({ message: 'No facility matches the required capacity/equipment.' });
     }
 
-    // Step 2: remove any candidate that's actually booked or under maintenance at that time
-    const available = [];
-    for (const facility of candidates) {
-      const bookingConflict = await Booking.findOne({
-        facilityId: facility._id,
-        bookingDate,
-        status: { $in: ['pending', 'approved'] },
-        startTime: { $lt: endTime },
-        endTime: { $gt: startTime }
-      });
+    const candidateIds = candidates.map(f => f._id);
 
-      const maintenanceConflict = await MaintenanceSchedule.findOne({
-        facilityId: facility._id,
-        startDateTime: { $lt: new Date(`${bookingDate}T${endTime}`) },
-        endDateTime: { $gt: new Date(`${bookingDate}T${startTime}`) }
-      });
+    // Step 2: ONE query for all conflicting bookings across every candidate
+    const conflictingBookings = await Booking.find({
+      facilityId: { $in: candidateIds },
+      bookingDate,
+      status: { $in: ['pending', 'approved'] },
+      startTime: { $lt: endTime },
+      endTime: { $gt: startTime }
+    }).select('facilityId');
 
-      if (!bookingConflict && !maintenanceConflict) {
-        available.push(facility);
-      }
-    }
+    // Step 3: ONE query for all conflicting maintenance windows across every candidate
+    const conflictingMaintenance = await MaintenanceSchedule.find({
+      facilityId: { $in: candidateIds },
+      startDateTime: { $lt: new Date(`${bookingDate}T${endTime}`) },
+      endDateTime: { $gt: new Date(`${bookingDate}T${startTime}`) }
+    }).select('facilityId');
+
+    // Build a quick lookup set of facility IDs that are blocked
+    const blockedIds = new Set([
+      ...conflictingBookings.map(b => b.facilityId.toString()),
+      ...conflictingMaintenance.map(m => m.facilityId.toString())
+    ]);
+
+    // Step 4: filter candidates in memory — no more per-candidate DB calls
+    const available = candidates.filter(f => !blockedIds.has(f._id.toString()));
 
     if (available.length === 0) {
       return res.status(404).json({ message: 'No facility matching your requirements is free at that time.' });
     }
 
-    // Step 3: rank by best fit — smallest capacity that still satisfies attendance (avoids wasting a huge hall on a small group)
+    // Step 5: rank by best fit — smallest capacity that still satisfies attendance
     available.sort((a, b) => a.capacity - b.capacity);
     const best = available[0];
 
@@ -132,7 +137,7 @@ exports.recommendFacility = async (req, res) => {
     res.status(200).json({
       recommended: best,
       reasons,
-      otherOptions: available.slice(1, 4) // up to 3 runner-ups
+      otherOptions: available.slice(1, 4)
     });
   } catch (err) {
     console.error(err);
