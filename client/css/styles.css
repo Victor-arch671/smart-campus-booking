@@ -10,19 +10,19 @@
 
 /* ---------- Design tokens ---------- */
 :root {
-  --ink: #16213e;         /* primary structure: headers, nav, dark buttons */
-  --ink-soft: #2c3a5e;    /* hover state for ink elements */
-  --paper: #f5f6f2;       /* page background */
-  --surface: #ffffff;     /* card/table backgrounds */
-  --signal: #e8a33d;      /* primary action color */
-  --signal-soft: #f4c579; /* signal hover */
-  --confirmed: #2f7a4f;   /* success / available */
+  --ink: #16213e;
+  --ink-soft: #2c3a5e;
+  --paper: #f5f6f2;
+  --surface: #ffffff;
+  --signal: #e8a33d;
+  --signal-soft: #f4c579;
+  --confirmed: #2f7a4f;
   --confirmed-bg: #e5f3ea;
-  --alert: #c6432b;       /* error / delete */
+  --alert: #c6432b;
   --alert-bg: #fbe9e5;
   --pending-bg: #fdf1de;
-  --slate: #5b6b7c;       /* secondary text */
-  --slate-light: #dfe3e8; /* borders, dividers */
+  --slate: #5b6b7c;
+  --slate-light: #dfe3e8;
   --radius: 8px;
   --shadow-card: 0 1px 2px rgba(22,33,62,0.06), 0 4px 16px rgba(22,33,62,0.06);
   --shadow-hover: 0 2px 4px rgba(22,33,62,0.08), 0 8px 24px rgba(22,33,62,0.10);
@@ -229,11 +229,61 @@ button:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   color: var(--slate);
 }
 
+/* ---------- User dashboard hub: subtext + big nav cards ---------- */
+.dashboard-subtext {
+  color: var(--slate);
+  font-size: 0.95rem;
+  margin: 0 0 1.5rem 0;
+}
+
+.nav-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.nav-card {
+  display: block;
+  background: var(--paper);
+  border: 1px solid var(--slate-light);
+  border-top: 4px solid var(--signal);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.nav-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-top-color: var(--ink);
+}
+
+.nav-card-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.nav-card h3 { margin: 0 0 0.4rem 0; font-size: 1.1rem; }
+
+.nav-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--slate);
+  line-height: 1.4;
+}
+
 /* ---------- Tables ---------- */
+.table-scroll {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
   font-size: 0.9rem;
 }
 
@@ -264,6 +314,8 @@ tbody tr:hover { background: var(--paper); }
 td.data, td[data-type="code"] { font-family: 'IBM Plex Mono', monospace; }
 
 table select { width: auto; margin: 0; padding: 0.35rem 0.5rem; font-size: 0.85rem; }
+
+.managerSelect { max-width: 220px; text-overflow: ellipsis; }
 
 .saveRoleBtn, .saveStatusBtn {
   width: auto;
@@ -296,8 +348,7 @@ table select { width: auto; margin: 0; padding: 0.35rem 0.5rem; font-size: 0.85r
 
 .deleteBtn:hover { background: var(--alert); color: white; }
 
-/* ---------- Status badges ----------
-   Use like: <span class="badge badge-confirmed">Available</span>  */
+/* ---------- Status badges ---------- */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -344,11 +395,7 @@ table select { width: auto; margin: 0; padding: 0.35rem 0.5rem; font-size: 0.85r
 
 .inline-form button { width: auto; padding: 0.6rem 1.2rem; flex: 0 0 auto; }
 
-/* ---------- Signature element: signage-plate header (optional, for later pages) ----------
-   <div class="plate-header">
-     <span class="plate-kicker">Section 02</span>
-     <h3>Facility Management</h3>
-   </div>                                                                */
+/* ---------- Signature element: signage-plate section header ---------- */
 .plate-header { border-left: 4px solid var(--signal); padding-left: 0.9rem; margin: 2rem 0 1rem 0; }
 
 .plate-kicker {
@@ -362,6 +409,86 @@ table select { width: auto; margin: 0; padding: 0.35rem 0.5rem; font-size: 0.85r
 }
 
 .plate-header h3 { margin: 0; }
+
+/* ---------- Report summary cards ---------- */
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.5rem 0;
+}
+
+.report-card {
+  background: var(--paper);
+  border: 1px solid var(--slate-light);
+  border-left: 4px solid var(--ink);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.report-card-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate);
+}
+
+.report-card-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.report-timestamp {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--slate);
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+/* ---------- Notification cards ---------- */
+.notification-card {
+  background: var(--surface);
+  border: 1px solid var(--slate-light);
+  border-left: 4px solid var(--signal);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.notification-card.read {
+  border-left-color: var(--slate-light);
+  opacity: 0.7;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.notification-time { font-size: 0.75rem; color: var(--slate); }
+
+.markReadBtn {
+  width: auto;
+  background: var(--ink);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.markReadBtn:hover { background: var(--ink-soft); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
@@ -379,4 +506,9 @@ table select { width: auto; margin: 0; padding: 0.35rem 0.5rem; font-size: 0.85r
     color: var(--slate);
     font-family: 'IBM Plex Mono', monospace;
   }
+}
+/* Slightly narrower minimum card width for admin's larger set of nav cards */
+#usersTable ~ .nav-card-grid,
+.dashboard-wrapper .nav-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }

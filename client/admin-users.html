@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Management - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+      <h2>User Management</h2>
+      <nav>
+        <a href="admin-dashboard.html">← Back to Dashboard</a>
+        <a href="admin-bookings.html">All Bookings</a>
+        <a href="admin-facilities.html">Facilities</a>
+        <a href="admin-maintenance.html">Maintenance</a>
+        <a href="admin-risk-alerts.html">Risk Alerts</a>
+        <a href="admin-reports.html">Reports</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <p id="statusMsg"></p>
+
+    <h3>Add New User</h3>
+    <form id="addUserForm" class="inline-form">
+      <input type="text" id="newName" placeholder="Full Name" required>
+      <input type="email" id="newEmail" placeholder="Email" required>
+      <input type="password" id="newPassword" placeholder="Temporary Password" required>
+      <select id="newRole" required>
+        <option value="user">User</option>
+        <option value="facility_manager">Facility Manager</option>
+        <option value="admin">Admin</option>
+      </select>
+      <input type="text" id="newDepartment" placeholder="Department (optional)">
+
+      <select id="newSecurityQuestion" required>
+        <option value="" disabled selected>-- Security question --</option>
+        <option value="What was the name of your first school?">What was the name of your first school?</option>
+        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+        <option value="What was the name of your childhood pet?">What was the name of your childhood pet?</option>
+        <option value="What city were you born in?">What city were you born in?</option>
+      </select>
+      <input type="text" id="newSecurityAnswer" placeholder="Security answer" required>
+
+      <button type="submit">Add User</button>
+    </form>
+    <p id="addUserMsg"></p>
+
+    <h3>All Users</h3>
+    <div class="table-scroll">
+      <table id="usersTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Department</th>
+            <th>Security Question</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/utils/auth.js?v=3"></script>
+  <script src="js/api/adminApi.js?v=3"></script>
+  <script src="js/pages/admin-users.js?v=3"></script>
+</body>
+</html>

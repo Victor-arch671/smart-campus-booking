@@ -2,23 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Dashboard - Smart Campus Booking</title>
+  <title>My Dashboard - Smart Campus Booking</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-  <div class="dashboard">
-    <h2>Welcome, <span id="userName"></span></h2>
-    <p>Role: <span id="userRole"></span></p>
-    <button id="logoutBtn">Logout</button>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <!-- Header now only shows the greeting and logout — navigation moved into the cards below -->
+    <div class="dashboard-header">
+      <h2>Welcome, <span id="userName"></span></h2>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <p class="dashboard-subtext">What would you like to do today?</p>
+
+    <!-- Large clickable nav cards, replacing the old top nav links -->
+    <div class="nav-card-grid">
+      <a href="user-search.html" class="nav-card">
+        <span class="nav-card-icon">🔍</span>
+        <h3>Search &amp; Book</h3>
+        <p>Find the best-matching facility for your event and reserve it.</p>
+      </a>
+
+      <a href="user-bookings.html" class="nav-card">
+        <span class="nav-card-icon">📅</span>
+        <h3>My Bookings</h3>
+        <p>View your booking history and cancel upcoming reservations.</p>
+      </a>
+
+      <a href="user-notifications.html" class="nav-card">
+        <span class="nav-card-icon">🔔</span>
+        <h3>Notifications</h3>
+        <p>Check updates on your booking approvals and reminders.</p>
+      </a>
+    </div>
   </div>
 
   <script src="js/utils/auth.js"></script>
   <script>
+    // Only logged-in users can view this page
     requireAuth();
     const user = getUser();
     document.getElementById('userName').textContent = user.name;
-    document.getElementById('userRole').textContent = user.role;
-
     document.getElementById('logoutBtn').addEventListener('click', logout);
   </script>
 </body>

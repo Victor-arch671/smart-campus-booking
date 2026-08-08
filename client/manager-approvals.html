@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pending Approvals - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+      <h2>Pending Approvals</h2>
+      <nav>
+        <a href="manager-dashboard.html">← Back to Dashboard</a>
+        <a href="manager-calendar.html">Calendar</a>
+        <a href="manager-utilization.html">Utilization</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <p>Showing pending bookings for facilities assigned to you, ranked by priority score.</p>
+    <p id="statusMsg"></p>
+
+    <div class="table-scroll">
+      <table id="bookingsTable">
+        <thead>
+          <tr>
+            <th>Facility</th>
+            <th>Requested By</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Attendance</th>
+            <th>Priority Score</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script src="js/api/managerApi.js"></script>
+  <script src="js/pages/manager-approvals.js"></script>
+</body>
+</html>

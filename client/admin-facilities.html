@@ -8,16 +8,19 @@
 <body class="dashboard-body">
   <div class="dashboard-wrapper">
 
-    <!-- Header with nav back to the main admin dashboard -->
     <div class="dashboard-header">
       <h2>Manage Facilities</h2>
-      <div>
+      <nav>
         <a href="admin-dashboard.html">← Back to Dashboard</a>
-        <button id="logoutBtn">Logout</button>
-      </div>
+        <a href="admin-users.html">Users</a>
+        <a href="admin-bookings.html">All Bookings</a>
+        <a href="admin-maintenance.html">Maintenance</a>
+        <a href="admin-risk-alerts.html">Risk Alerts</a>
+        <a href="admin-reports.html">Reports</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
     </div>
 
-    <!-- Form to add a new facility -->
     <h3>Add New Facility</h3>
     <form id="facilityForm" class="inline-form">
       <input type="text" id="name" placeholder="Facility Name" required>
@@ -35,27 +38,30 @@
     </form>
     <p id="formMsg"></p>
 
-    <!-- Table listing all existing facilities -->
     <h3>All Facilities</h3>
-    <table id="facilitiesTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Capacity</th>
-          <th>Location</th>
-          <th>Projector</th>
-          <th>AC</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="facilitiesTableBody"></tbody>
-    </table>
+    <div class="table-scroll">
+      <table id="facilitiesTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Capacity</th>
+            <th>Location</th>
+            <th>Projector</th>
+            <th>AC</th>
+            <th>Status</th>
+            <th>Manager</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="facilitiesTableBody"></tbody>
+      </table>
+    </div>
   </div>
 
   <script src="js/utils/auth.js"></script>
   <script src="js/api/facilityApi.js"></script>
+  <script src="js/api/adminApi.js"></script>
   <script src="js/pages/admin-facilities.js"></script>
 </body>
 </html>

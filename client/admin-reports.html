@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Reports - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+      <h2>System Reports</h2>
+      <nav>
+        <a href="admin-dashboard.html">← Back to Dashboard</a>
+        <a href="admin-users.html">Users</a>
+        <a href="admin-bookings.html">All Bookings</a>
+        <a href="admin-facilities.html">Facilities</a>
+        <a href="admin-maintenance.html">Maintenance</a>
+        <a href="admin-risk-alerts.html">Risk Alerts</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="plate-header">
+      <span class="plate-kicker">Overview</span>
+      <h3>System Totals</h3>
+    </div>
+    <div class="report-grid" id="totalsGrid"></div>
+
+    <div class="plate-header">
+      <span class="plate-kicker">Breakdown</span>
+      <h3>Bookings by Status</h3>
+    </div>
+    <div class="table-scroll">
+      <table id="statusTable">
+        <thead>
+          <tr><th>Status</th><th>Count</th></tr>
+        </thead>
+        <tbody id="statusTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="plate-header">
+      <span class="plate-kicker">Ranking</span>
+      <h3>Top Facilities</h3>
+    </div>
+    <div class="table-scroll">
+      <table id="topFacilitiesTable">
+        <thead>
+          <tr><th>Facility</th><th>Type</th><th>Total Bookings</th></tr>
+        </thead>
+        <tbody id="topFacilitiesTableBody"></tbody>
+      </table>
+    </div>
+
+    <p id="generatedAt" class="report-timestamp"></p>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script src="js/api/reportApi.js"></script>
+  <script src="js/pages/admin-reports.js"></script>
+</body>
+</html>

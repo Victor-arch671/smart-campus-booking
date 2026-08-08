@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search & Book - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <!-- Header with nav back to the main user dashboard and across to other user pages -->
+    <div class="dashboard-header">
+      <h2>Search &amp; Book</h2>
+      <nav>
+        <a href="user-dashboard.html">← Back to Dashboard</a>
+        <a href="user-bookings.html">My Bookings</a>
+        <a href="user-notifications.html">Notifications</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <!-- Search form: feeds the Smart Recommendation engine on the backend -->
+    <div class="plate-header">
+      <span class="plate-kicker">Step 1</span>
+      <h3>Tell us what you need</h3>
+    </div>
+    <form id="searchForm" class="inline-form">
+      <input type="number" id="expectedAttendance" placeholder="Expected Attendance" required>
+      <input type="date" id="bookingDate" required>
+      <input type="time" id="startTime" required>
+      <input type="time" id="endTime" required>
+      <label><input type="checkbox" id="hasProjector"> Projector needed</label>
+      <label><input type="checkbox" id="hasAC"> AC needed</label>
+      <button type="submit">Find a Facility</button>
+    </form>
+    <p id="searchMsg"></p>
+
+    <!-- Recommended result appears here after searching -->
+    <div id="resultSection" style="display: none;">
+      <div class="plate-header">
+        <span class="plate-kicker">Recommended</span>
+        <h3 id="recommendedName"></h3>
+      </div>
+      <ul id="recommendedReasons"></ul>
+
+      <!-- Booking form for the recommended facility -->
+      <form id="bookForm" class="inline-form">
+        <input type="text" id="purpose" placeholder="Purpose of booking" required>
+        <input type="number" id="urgency" placeholder="Urgency (1-5)" min="1" max="5" value="1" required>
+        <input type="number" id="peopleAffected" placeholder="People Affected" required>
+        <button type="submit">Book This Facility</button>
+      </form>
+      <p id="bookMsg"></p>
+    </div>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script src="js/api/bookingApi.js"></script>
+  <script src="js/pages/user-search.js"></script>
+</body>
+</html>

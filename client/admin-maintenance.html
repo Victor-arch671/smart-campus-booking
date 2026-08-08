@@ -8,17 +8,19 @@
 <body class="dashboard-body">
   <div class="dashboard-wrapper">
 
-    <!-- Header with nav back to the main admin dashboard -->
     <div class="dashboard-header">
       <h2>Maintenance Scheduling</h2>
       <nav>
-        <a href="admin-dashboard.html">Users</a>
+        <a href="admin-dashboard.html">← Back to Dashboard</a>
+        <a href="admin-users.html">Users</a>
+        <a href="admin-bookings.html">All Bookings</a>
         <a href="admin-facilities.html">Facilities</a>
+        <a href="admin-risk-alerts.html">Risk Alerts</a>
+        <a href="admin-reports.html">Reports</a>
       </nav>
       <button id="logoutBtn">Logout</button>
     </div>
 
-    <!-- Facility picker: choose which facility's maintenance windows to view/manage -->
     <div class="plate-header">
       <span class="plate-kicker">Step 1</span>
       <h3>Select a Facility</h3>
@@ -27,7 +29,6 @@
       <option value="">-- Choose a facility --</option>
     </select>
 
-    <!-- Form to schedule a new maintenance window for the selected facility -->
     <div class="plate-header">
       <span class="plate-kicker">Step 2</span>
       <h3>Schedule Maintenance</h3>
@@ -40,22 +41,23 @@
     </form>
     <p id="formMsg"></p>
 
-    <!-- Table listing existing maintenance windows for the selected facility -->
     <div class="plate-header">
       <span class="plate-kicker">Step 3</span>
       <h3>Scheduled Windows</h3>
     </div>
-    <table id="maintenanceTable">
-      <thead>
-        <tr>
-          <th>Start</th>
-          <th>End</th>
-          <th>Reason</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="maintenanceTableBody"></tbody>
-    </table>
+    <div class="table-scroll">
+      <table id="maintenanceTable">
+        <thead>
+          <tr>
+            <th>Start</th>
+            <th>End</th>
+            <th>Reason</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="maintenanceTableBody"></tbody>
+      </table>
+    </div>
   </div>
 
   <script src="js/utils/auth.js"></script>

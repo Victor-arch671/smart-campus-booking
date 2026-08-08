@@ -18,13 +18,15 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const department = document.getElementById('department').value;
+  const securityQuestion = document.getElementById('securityQuestion').value;
+  const securityAnswer = document.getElementById('securityAnswer').value;
   const errorMsg = document.getElementById('errorMsg');
   const successMsg = document.getElementById('successMsg');
 
   errorMsg.textContent = '';
   successMsg.textContent = '';
 
-  const result = await registerUser({ name, email, password, department });
+  const result = await registerUser({ name, email, password, department, securityQuestion, securityAnswer });
 
   if (result.message === 'User registered successfully.') {
     successMsg.textContent = 'Registration successful! Redirecting to login...';

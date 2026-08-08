@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Bookings - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+      <h2>All Bookings</h2>
+      <nav>
+        <a href="admin-dashboard.html">← Back to Dashboard</a>
+        <a href="admin-users.html">Users</a>
+        <a href="admin-facilities.html">Facilities</a>
+        <a href="admin-maintenance.html">Maintenance</a>
+        <a href="admin-risk-alerts.html">Risk Alerts</a>
+        <a href="admin-reports.html">Reports</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <p>As an Admin, you see every pending booking system-wide — including bookings for facilities that have no Facility Manager assigned yet.</p>
+    <p id="statusMsg"></p>
+
+    <div class="table-scroll">
+      <table id="bookingsTable">
+        <thead>
+          <tr>
+            <th>Facility</th>
+            <th>Requested By</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Attendance</th>
+            <th>Priority Score</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script src="js/api/adminBookingApi.js"></script>
+  <script src="js/pages/admin-bookings.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Bookings - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+      <h2>My Bookings</h2>
+      <nav>
+        <a href="user-dashboard.html">← Back to Dashboard</a>
+        <a href="user-search.html">Search &amp; Book</a>
+        <a href="user-notifications.html">Notifications</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <p id="statusMsg"></p>
+
+    <div class="table-scroll">
+      <table id="bookingsTable">
+        <thead>
+          <tr>
+            <th>Facility</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Purpose</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script src="js/api/bookingApi.js"></script>
+  <script src="js/pages/user-bookings.js"></script>
+</body>
+</html>

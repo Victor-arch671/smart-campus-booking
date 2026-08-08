@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manager Dashboard - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+      <h2>Welcome, <span id="managerName"></span></h2>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <p class="dashboard-subtext">What would you like to do today?</p>
+
+    <div class="nav-card-grid">
+      <a href="manager-approvals.html" class="nav-card">
+        <span class="nav-card-icon">✅</span>
+        <h3>Pending Approvals</h3>
+        <p>Review and act on booking requests for your assigned facilities.</p>
+      </a>
+
+      <a href="manager-calendar.html" class="nav-card">
+        <span class="nav-card-icon">🗓️</span>
+        <h3>Calendar</h3>
+        <p>View upcoming bookings for any facility you manage.</p>
+      </a>
+
+      <a href="manager-utilization.html" class="nav-card">
+        <span class="nav-card-icon">📈</span>
+        <h3>Utilization</h3>
+        <p>See how often your facilities are being booked.</p>
+      </a>
+    </div>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script>
+    // Only facility managers (or admins previewing) can view this page
+    requireRole(['facility_manager', 'admin']);
+    const user = getUser();
+    document.getElementById('managerName').textContent = user.name;
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+  </script>
+</body>
+</html>

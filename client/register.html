@@ -19,6 +19,16 @@
 
       <input type="text" id="department" placeholder="Department (optional)">
 
+      <!-- Security question, used later for the Forgot Password flow -->
+      <select id="securityQuestion" required>
+        <option value="" disabled selected>-- Choose a security question --</option>
+        <option value="What was the name of your first school?">What was the name of your first school?</option>
+        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+        <option value="What was the name of your childhood pet?">What was the name of your childhood pet?</option>
+        <option value="What city were you born in?">What city were you born in?</option>
+      </select>
+      <input type="text" id="securityAnswer" placeholder="Your answer" required>
+
       <button type="submit">Register</button>
     </form>
     <p id="errorMsg" class="error"></p>
