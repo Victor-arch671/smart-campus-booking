@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <!-- Header shows who's logged in and gives a way to log out -->
+    <div class="dashboard-header">
+      <h2>Admin Dashboard</h2>
+      <div>
+        <span id="adminName"></span>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+    <!-- User Management section: lists every user and lets the admin change their role -->
+    <h3>User Management</h3>
+    <table id="usersTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="usersTableBody"></tbody>
+      <!-- Rows get filled in dynamically by admin-dashboard.js -->
+    </table>
+
+    <!-- Shows success/error messages after a role update -->
+    <p id="statusMsg"></p>
+  </div>
+
+  <!-- Load order matters: auth.js and adminApi.js must load before admin-dashboard.js uses their functions -->
+  <script src="js/utils/auth.js"></script>
+  <script src="js/api/adminApi.js"></script>
+  <script src="js/pages/admin-dashboard.js"></script>
+</body>
+</html>

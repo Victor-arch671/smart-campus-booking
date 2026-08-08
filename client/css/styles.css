@@ -1,0 +1,99 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.auth-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  width: 300px;
+}
+input, button {
+  display: block;
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  box-sizing: border-box;
+}
+button {
+  background: #1f3864;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.error { color: red; font-size: 0.9rem; }
+.success { color: #1e7b34; font-size: 0.9rem; }
+
+.password-wrapper {
+  position: relative;
+}
+.password-wrapper input {
+  padding-right: 50px;
+}
+.toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: #1f3864;
+  cursor: pointer;
+  user-select: none;
+}
+/* Layout for full-page dashboards (different from the centered login/register box) */
+.dashboard-body {
+  display: block;
+  height: auto;
+  padding: 2rem;
+}
+.dashboard-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.dashboard-header button {
+  width: auto;
+  padding: 0.4rem 1rem;
+  margin-left: 1rem;
+}
+
+/* User management table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.6rem;
+  border-bottom: 1px solid #eee;
+}
+th {
+  background: #1f3864;
+  color: white;
+}
+select, .saveRoleBtn {
+  padding: 0.3rem;
+}
+.saveRoleBtn {
+  background: #1f3864;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

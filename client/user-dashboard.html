@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="dashboard">
+    <h2>Welcome, <span id="userName"></span></h2>
+    <p>Role: <span id="userRole"></span></p>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script>
+    requireAuth();
+    const user = getUser();
+    document.getElementById('userName').textContent = user.name;
+    document.getElementById('userRole').textContent = user.role;
+
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+  </script>
+</body>
+</html>
