@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Maintenance Scheduling - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <!-- Header with nav back to the main admin dashboard -->
+    <div class="dashboard-header">
+      <h2>Maintenance Scheduling</h2>
+      <nav>
+        <a href="admin-dashboard.html">Users</a>
+        <a href="admin-facilities.html">Facilities</a>
+      </nav>
+      <button id="logoutBtn">Logout</button>
+    </div>
+
+    <!-- Facility picker: choose which facility's maintenance windows to view/manage -->
+    <div class="plate-header">
+      <span class="plate-kicker">Step 1</span>
+      <h3>Select a Facility</h3>
+    </div>
+    <select id="facilitySelect">
+      <option value="">-- Choose a facility --</option>
+    </select>
+
+    <!-- Form to schedule a new maintenance window for the selected facility -->
+    <div class="plate-header">
+      <span class="plate-kicker">Step 2</span>
+      <h3>Schedule Maintenance</h3>
+    </div>
+    <form id="maintenanceForm" class="inline-form">
+      <input type="datetime-local" id="startDateTime" required>
+      <input type="datetime-local" id="endDateTime" required>
+      <input type="text" id="reason" placeholder="Reason (e.g. AC servicing)">
+      <button type="submit">Schedule</button>
+    </form>
+    <p id="formMsg"></p>
+
+    <!-- Table listing existing maintenance windows for the selected facility -->
+    <div class="plate-header">
+      <span class="plate-kicker">Step 3</span>
+      <h3>Scheduled Windows</h3>
+    </div>
+    <table id="maintenanceTable">
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th>Reason</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="maintenanceTableBody"></tbody>
+    </table>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script src="js/api/facilityApi.js"></script>
+  <script src="js/api/maintenanceApi.js"></script>
+  <script src="js/pages/admin-maintenance.js"></script>
+</body>
+</html>

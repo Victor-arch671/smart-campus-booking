@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Facilities - Smart Campus Booking</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-wrapper">
+
+    <!-- Header with nav back to the main admin dashboard -->
+    <div class="dashboard-header">
+      <h2>Manage Facilities</h2>
+      <div>
+        <a href="admin-dashboard.html">← Back to Dashboard</a>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+    <!-- Form to add a new facility -->
+    <h3>Add New Facility</h3>
+    <form id="facilityForm" class="inline-form">
+      <input type="text" id="name" placeholder="Facility Name" required>
+      <select id="type" required>
+        <option value="hall">Hall</option>
+        <option value="lab">Lab</option>
+        <option value="room">Room</option>
+        <option value="equipment">Equipment</option>
+      </select>
+      <input type="number" id="capacity" placeholder="Capacity" required>
+      <input type="text" id="location" placeholder="Location">
+      <label><input type="checkbox" id="hasProjector"> Projector</label>
+      <label><input type="checkbox" id="hasAC"> AC</label>
+      <button type="submit">Add Facility</button>
+    </form>
+    <p id="formMsg"></p>
+
+    <!-- Table listing all existing facilities -->
+    <h3>All Facilities</h3>
+    <table id="facilitiesTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Capacity</th>
+          <th>Location</th>
+          <th>Projector</th>
+          <th>AC</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="facilitiesTableBody"></tbody>
+    </table>
+  </div>
+
+  <script src="js/utils/auth.js"></script>
+  <script src="js/api/facilityApi.js"></script>
+  <script src="js/pages/admin-facilities.js"></script>
+</body>
+</html>
